@@ -1,12 +1,21 @@
 import { BookOpen, FileText, TrendingUp, Briefcase, ArrowRight } from 'lucide-react';
-import React from 'react'; // Explicit React import for clarity
+import React from 'react';
 
-// Define the component props
+// Define the component's props interface for type safety
 interface ResourcesPageProps {
   onNavigate: (page: string) => void;
 }
 
+/**
+ * A responsive and visually appealing resources page component.
+ * It features a hero section, filterable categories, a grid of articles,
+ * and a newsletter subscription call-to-action.
+ *
+ * @param {ResourcesPageProps} props - The component props.
+ * @returns {JSX.Element} The rendered resources page.
+ */
 export default function ResourcesPage({ onNavigate }: ResourcesPageProps) {
+  // --- Data Definitions ---
   const blogPosts = [
     {
       title: 'How to Comply with the New State Privacy Laws in 2025',
@@ -59,38 +68,39 @@ export default function ResourcesPage({ onNavigate }: ResourcesPageProps) {
     { name: 'Career Growth', description: 'Building your path in privacy & analytics', color: 'purple' },
   ];
 
-  // Helper function to dynamically generate Tailwind classes for categories and posts.
-  // NOTE: When using dynamic classes like this (e.g., `bg-${category.color}-50`),
-  // you must ensure all possible class combinations (e.g., `bg-blue-50`, `bg-orange-500`, etc.)
-  // are explicitly present somewhere in your code or config to prevent Tailwind's
-  // tree-shaking from removing them during the build process.
+  /**
+   * Helper function to generate Tailwind CSS color classes dynamically.
+   * NOTE: To prevent Tailwind's JIT compiler from tree-shaking these classes,
+   * they are listed in a hidden div at the bottom of the component.
+   */
   const getColorClasses = (color: string) => ({
     bgLight: `bg-${color}-50`,
     borderLight: `border-${color}-100 hover:border-${color}-300`,
     textDark: `text-${color}-900`,
     textAccent: `text-${color}-700`,
-    bgAccent: `bg-${color}-500 to-${color}-700`,
+    bgGradient: `bg-gradient-to-br from-${color}-500 to-${color}-700`,
     bgLightAccent: `bg-${color}-100`,
-    textBlue: 'text-blue-600 hover:text-blue-700',
+    textInteractive: 'text-blue-600 hover:text-blue-700',
   });
 
   return (
-    <div className="pt-24 min-h-screen">
-      
-      {/* ----------------- Hero Section ----------------- */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-blue-50 to-blue-100">
+    <div className="pt-24 min-h-screen bg-gray-50">
+
+      {/* Hero Section */}
+      <header className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-blue-50 to-blue-100">
         <div className="max-w-7xl mx-auto text-center">
           <h1 className="text-5xl font-bold text-gray-900 mb-6">Resources & Insights</h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            Stay informed with expert insights, tutorials, and updates on global privacy and data governance trends. We publish regularly on topics that help you build smarter and safer data practices.
+            Stay informed with expert insights, tutorials, and updates on global privacy and data governance trends.
           </p>
         </div>
-      </section>
+      </header>
 
-      {/* ----------------- Categories Section ----------------- */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+      <main className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
         <div className="max-w-7xl mx-auto">
-          <div className="mb-16">
+
+          {/* Categories Section */}
+          <section id="categories" className="mb-20">
             <h2 className="text-3xl font-bold text-gray-900 mb-8">Browse by Category</h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
               {categories.map((category) => {
@@ -98,11 +108,7 @@ export default function ResourcesPage({ onNavigate }: ResourcesPageProps) {
                 return (
                   <div
                     key={category.name}
-                    // These classes are explicitly added below to ensure Tailwind recognizes them:
-                    // bg-blue-50 bg-orange-50 bg-green-50 bg-purple-50
-                    // border-blue-100 border-orange-100 border-green-100 border-purple-100
-                    // hover:border-blue-300 hover:border-orange-300 hover:border-green-300 hover:border-purple-300
-                    className={`${classes.bgLight} p-6 rounded-xl border-2 ${classes.borderLight} transition-colors cursor-pointer transform hover:scale-[1.01]`}
+                    className={`${classes.bgLight} p-6 rounded-xl border-2 ${classes.borderLight} transition-all cursor-pointer transform hover:scale-[1.02] hover:shadow-md`}
                   >
                     <h3 className={`${classes.textDark} text-lg font-bold mb-2`}>{category.name}</h3>
                     <p className="text-sm text-gray-600">{category.description}</p>
@@ -110,57 +116,39 @@ export default function ResourcesPage({ onNavigate }: ResourcesPageProps) {
                 );
               })}
             </div>
-          </div>
+          </section>
 
-          {/* ----------------- Featured Articles Section ----------------- */}
-          <div className="mb-16">
+          {/* Featured Articles Section */}
+          <section id="articles" className="mb-20">
             <h2 className="text-3xl font-bold text-gray-900 mb-8">Featured Articles</h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {blogPosts.map((post, index) => {
                 const Icon = post.icon;
                 const classes = getColorClasses(post.color);
                 return (
-                  <div key={index} className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow overflow-hidden border border-gray-100 transform hover:-translate-y-1">
-                    
-                    {/* Header Icon */}
-                    <div 
-                      // These classes are explicitly added below to ensure Tailwind recognizes them:
-                      // bg-gradient-to-br from-blue-500 to-blue-700
-                      // bg-gradient-to-br from-green-500 to-green-700
-                      // bg-gradient-to-br from-purple-500 to-purple-700
-                      // bg-gradient-to-br from-orange-500 to-orange-700
-                      className={`bg-gradient-to-br from-${post.color}-500 to-${post.color}-700 p-6 flex items-center justify-center`}
-                    >
+                  <article key={index} className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow overflow-hidden border border-gray-100 flex flex-col transform hover:-translate-y-1">
+                    <div className={`${classes.bgGradient} p-6 flex items-center justify-center`}>
                       <Icon className="w-12 h-12 text-white" />
                     </div>
-                    
-                    {/* Content */}
-                    <div className="p-6">
-                      <div 
-                        // These classes are explicitly added below to ensure Tailwind recognizes them:
-                        // bg-blue-100 text-blue-700
-                        // bg-green-100 text-green-700
-                        // bg-purple-100 text-purple-700
-                        // bg-orange-100 text-orange-700
-                        className={`inline-block px-3 py-1 ${classes.bgLightAccent} ${classes.textAccent} text-xs font-semibold rounded-full mb-3`}
-                      >
+                    <div className="p-6 flex flex-col flex-grow">
+                      <p className={`inline-block px-3 py-1 ${classes.bgLightAccent} ${classes.textAccent} text-xs font-semibold rounded-full mb-3 self-start`}>
                         {post.category}
-                      </div>
+                      </p>
                       <h3 className="text-xl font-bold text-gray-900 mb-3">{post.title}</h3>
-                      <p className="text-gray-600 mb-4">{post.excerpt}</p>
-                      <button className={classes.textBlue + " font-medium inline-flex items-center"}>
+                      <p className="text-gray-600 mb-4 flex-grow">{post.excerpt}</p>
+                      <button onClick={() => onNavigate(post.title)} className={`${classes.textInteractive} font-medium inline-flex items-center self-start`}>
                         Read More
                         <ArrowRight className="ml-2 w-4 h-4" />
                       </button>
                     </div>
-                  </div>
+                  </article>
                 );
               })}
             </div>
-          </div>
+          </section>
 
-          {/* ----------------- Newsletter CTA ----------------- */}
-          <div className="bg-gradient-to-br from-blue-600 to-blue-800 rounded-2xl p-12 text-center text-white shadow-2xl">
+          {/* Newsletter CTA Section */}
+          <section id="newsletter" className="bg-gradient-to-br from-blue-600 to-blue-800 rounded-2xl p-12 text-center text-white shadow-2xl">
             <BookOpen className="w-16 h-16 mx-auto mb-6 text-blue-200" />
             <h2 className="text-3xl font-bold mb-4">Want More Resources?</h2>
             <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
@@ -170,6 +158,8 @@ export default function ResourcesPage({ onNavigate }: ResourcesPageProps) {
               <input
                 type="email"
                 placeholder="your@email.com"
+                aria-label="Email Address"
+                required
                 className="flex-1 px-6 py-3 rounded-lg text-gray-900 focus:outline-none focus:ring-4 focus:ring-blue-300 shadow-md"
               />
               <button
@@ -179,20 +169,20 @@ export default function ResourcesPage({ onNavigate }: ResourcesPageProps) {
                 Subscribe
               </button>
             </form>
-          </div>
+          </section>
         </div>
-      </section>
+      </main>
       
-      {/* Explicitly define Tailwind classes used dynamically to ensure they are bundled */}
+      {/* Tailwind CSS Safelist:
+        This hidden div includes all dynamically generated class names to ensure
+        they are not purged during the build process. An alternative is to add
+        them to the 'safelist' option in your `tailwind.config.js` file.
+      */}
       <div className="hidden">
-        <div className="bg-blue-50 border-blue-100 hover:border-blue-300 text-blue-900 bg-blue-100 text-blue-700"></div>
-        <div className="bg-green-50 border-green-100 hover:border-green-300 text-green-900 bg-green-100 text-green-700"></div>
-        <div className="bg-purple-50 border-purple-100 hover:border-purple-300 text-purple-900 bg-purple-100 text-purple-700"></div>
-        <div className="bg-orange-50 border-orange-100 hover:border-orange-300 text-orange-900 bg-orange-100 text-orange-700"></div>
-        <div className="bg-gradient-to-br from-blue-500 to-blue-700"></div>
-        <div className="bg-gradient-to-br from-green-500 to-green-700"></div>
-        <div className="bg-gradient-to-br from-purple-500 to-purple-700"></div>
-        <div className="bg-gradient-to-br from-orange-500 to-orange-700"></div>
+        <span className="bg-blue-50 border-blue-100 hover:border-blue-300 text-blue-900 bg-blue-100 text-blue-700 from-blue-500 to-blue-700"></span>
+        <span className="bg-green-50 border-green-100 hover:border-green-300 text-green-900 bg-green-100 text-green-700 from-green-500 to-green-700"></span>
+        <span className="bg-purple-50 border-purple-100 hover:border-purple-300 text-purple-900 bg-purple-100 text-purple-700 from-purple-500 to-purple-700"></span>
+        <span className="bg-orange-50 border-orange-100 hover:border-orange-300 text-orange-900 bg-orange-100 text-orange-700 from-orange-500 to-orange-700"></span>
       </div>
     </div>
   );

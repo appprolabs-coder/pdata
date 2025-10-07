@@ -1,8 +1,22 @@
 import { Mail, Phone, MapPin, Send, Calendar } from 'lucide-react';
 import { useState } from 'react';
+import React from 'react'; // Added explicit React import for clarity/compatibility
+
+// Define the shape of the form data
+interface FormData {
+  name: string;
+  company: string;
+  email: string;
+  inquiryType: string;
+  message: string;
+  preferredDate: string;
+}
+
+// Define the shape for form change event to simplify handleChange
+type InputChangeEvent = React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>;
 
 export default function ContactPage() {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     name: '',
     company: '',
     email: '',
@@ -13,14 +27,17 @@ export default function ContactPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    // NOTE: In a real application, you would send formData to a backend server or a service like Formspree/Netlify Forms here.
     console.log('Form submitted:', formData);
+    // You might also show a success message or clear the form here
+    // setFormData({ /* ... initial state ... */ });
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData({
-      ...formData,
+  const handleChange = (e: InputChangeEvent) => {
+    setFormData((prevData) => ({
+      ...prevData,
       [e.target.name]: e.target.value,
-    });
+    }));
   };
 
   return (
@@ -34,9 +51,12 @@ export default function ContactPage() {
         </div>
       </section>
 
+      {/* --- Contact Details & Form Section --- */}
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12">
+            
+            {/* Left Column: Contact Info & Why Choose Us */}
             <div>
               <h2 className="text-3xl font-bold text-gray-900 mb-6">Get in Touch</h2>
               <p className="text-lg text-gray-600 mb-8 leading-relaxed">
@@ -101,6 +121,7 @@ export default function ContactPage() {
               </div>
             </div>
 
+            {/* Right Column: Consultation Form */}
             <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-200">
               <h3 className="text-2xl font-bold text-gray-900 mb-6">Book Your Consultation</h3>
               <form onSubmit={handleSubmit} className="space-y-6">
@@ -181,6 +202,7 @@ export default function ContactPage() {
                       onChange={handleChange}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent outline-none transition-all"
                     />
+                    {/* Calendar icon position is relative to the containing div */}
                     <Calendar className="absolute right-3 top-3.5 w-5 h-5 text-gray-400 pointer-events-none" />
                   </div>
                 </div>
@@ -212,6 +234,7 @@ export default function ContactPage() {
         </div>
       </section>
 
+      {/* --- Newsletter Section --- */}
       <section className="py-20 bg-gray-50 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
           <Mail className="w-16 h-16 text-blue-600 mx-auto mb-6" />
@@ -233,6 +256,7 @@ export default function ContactPage() {
               <p className="text-gray-700">Invitations to webinars and events</p>
             </div>
           </div>
+          {/* NOTE: The newsletter form submission logic is omitted here and would also need a backend endpoint. */}
           <form className="max-w-md mx-auto flex gap-4">
             <input
               type="email"

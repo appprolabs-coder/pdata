@@ -1,4 +1,5 @@
 import { CheckCircle, Target, Users, Award } from 'lucide-react';
+import React from 'react'; // Importing React is good practice in newer React versions, though not always strictly necessary depending on your setup.
 
 interface AboutPageProps {
   onNavigate: (page: string) => void;
@@ -34,6 +35,8 @@ export default function AboutPage({ onNavigate }: AboutPageProps) {
           </div>
         </div>
       </section>
+
+---
 
       <section className="py-20 bg-gray-50 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
@@ -83,6 +86,8 @@ export default function AboutPage({ onNavigate }: AboutPageProps) {
           </div>
         </div>
       </section>
+
+---
 
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">

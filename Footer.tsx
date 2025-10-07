@@ -1,4 +1,5 @@
 import { Shield } from 'lucide-react';
+import React from 'react'; // Added explicit React import
 
 interface FooterProps {
   onNavigate: (page: string) => void;
@@ -9,6 +10,7 @@ export default function Footer({ onNavigate }: FooterProps) {
     <footer className="bg-gray-900 text-white py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <div className="grid md:grid-cols-4 gap-8 mb-8">
+          {/* Logo and Tagline */}
           <div>
             <div className="flex items-center space-x-2 mb-4">
               <Shield className="w-6 h-6 text-blue-400" />
@@ -21,6 +23,8 @@ export default function Footer({ onNavigate }: FooterProps) {
               Empowering organizations to build trust, ensure compliance, and unlock the true value of their data.
             </p>
           </div>
+
+          {/* Services Links */}
           <div>
             <h4 className="font-semibold mb-4">Services</h4>
             <ul className="space-y-2 text-sm text-gray-400">
@@ -46,6 +50,8 @@ export default function Footer({ onNavigate }: FooterProps) {
               </li>
             </ul>
           </div>
+
+          {/* Company Links */}
           <div>
             <h4 className="font-semibold mb-4">Company</h4>
             <ul className="space-y-2 text-sm text-gray-400">
@@ -71,6 +77,8 @@ export default function Footer({ onNavigate }: FooterProps) {
               </li>
             </ul>
           </div>
+
+          {/* Legal Links */}
           <div>
             <h4 className="font-semibold mb-4">Legal</h4>
             <ul className="space-y-2 text-sm text-gray-400">
@@ -80,6 +88,8 @@ export default function Footer({ onNavigate }: FooterProps) {
             </ul>
           </div>
         </div>
+        
+        {/* Copyright and Bottom Line */}
         <div className="border-t border-gray-800 pt-8 text-center text-sm text-gray-400">
           <p>&copy; 2025 P-Data. All Rights Reserved.</p>
           <p className="mt-2 text-blue-400 italic">"Your Privacy, Our Priority."</p>

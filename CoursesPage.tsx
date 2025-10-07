@@ -1,4 +1,5 @@
 import { GraduationCap, Award, BookOpen, CheckCircle, ArrowRight, Lock } from 'lucide-react';
+import React from 'react';
 
 interface CoursesPageProps {
   onNavigate: (page: string) => void;
@@ -77,6 +78,8 @@ export default function CoursesPage({ onNavigate }: CoursesPageProps) {
         </div>
       </section>
 
+      {/* ----------------- Free Courses Section ----------------- */}
+
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
@@ -107,6 +110,8 @@ export default function CoursesPage({ onNavigate }: CoursesPageProps) {
               </div>
             ))}
           </div>
+
+          {/* ----------------- Professional Certifications Section ----------------- */}
 
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold text-gray-900 mb-4">Professional Certifications</h2>
@@ -142,6 +147,8 @@ export default function CoursesPage({ onNavigate }: CoursesPageProps) {
               </div>
             ))}
           </div>
+
+          {/* ----------------- Career Resources Callout ----------------- */}
 
           <div className="bg-gradient-to-br from-gray-700 to-gray-900 rounded-2xl p-12 text-white">
             <div className="grid md:grid-cols-2 gap-8 items-center">
